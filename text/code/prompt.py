@@ -1,6 +1,7 @@
 from typing import Optional
 
 def prompt_sentence() -> Optional[str]:
+    print("----------")
     prompt = input("Enter a prompt: ").lower()
     if prompt == "" or prompt == "exit":
         return None
