@@ -1,5 +1,5 @@
 from prompt import prompt_sentence, split_prompt, count_words, print_counts
-from learn import gather_counts, find_sentiment
+from learn import gather_counts, classify_sentiment
 import pickle
 import os.path as path
 
@@ -24,7 +24,7 @@ def main():
         # print("Counts for prompt:")
         # print_counts(counts)
         
-        sentiment, score = find_sentiment(sentiment_counts, prompt_counts)
+        sentiment, score = classify_sentiment(sentiment_counts, prompt_counts)
         print(f"Max sentiment: {sentiment}")
         print(f"Max score: {score}")
 
