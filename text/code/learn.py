@@ -53,12 +53,9 @@ def score_sentiments(sentiment_counts: dict[str, dict[str, int]], prompt_counts:
     Final Output: {"happy": 7, "sad": 1}
     """
     scores = {}
-    for sentiment, learned_counts in sentiment_counts.items():
-        score = 0
-        for word, count in prompt_counts.items():
-            if word in learned_counts:
-                score += learned_counts[word] * count
-        scores[sentiment] = score
+    
+    # Your code here
+
     return scores
 
 
@@ -72,12 +69,9 @@ def classify_sentiment(sentiment_counts: dict[str, dict[str, int]], prompt_count
     """
     max_sentiment = None
     max_score = 0
-    all_scores = score_sentiments(sentiment_counts, prompt_counts)
-    for sentiment, score in all_scores.items():
-        if score > max_score:
-            max_score = score
-            max_sentiment = sentiment
-        print(f"Score for {sentiment}: {score}")
+
+    # Your code here
+
     return max_sentiment, max_score
 
 def main():
