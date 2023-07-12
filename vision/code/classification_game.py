@@ -12,9 +12,9 @@ from utils import render_multiline
 classes = pretrain_classes
 
 if __name__ == "__main__":
-    do_tune = False
+    fine_tune = False
     just_labeled = False
-    model = finetuned_model(do_tune = do_tune)
+    model = finetuned_model(do_tune = fine_tune)
     model.hparams.classes = pretrain_classes
     if just_labeled:
         classes = labeled_classes(pretrain_classes)
