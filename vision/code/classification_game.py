@@ -19,7 +19,7 @@ if __name__ == "__main__":
     if just_labeled:
         classes = labeled_classes(pretrain_classes)
 
-    game = DrawingGame(width = 1000, height = 800, resolution = 28, blur = 0.4)
+    game = DrawingGame(width = 800, height = 600, resolution = 28, blur = 0.4)
 
     font = pygame.font.Font("freesansbold.ttf", 24)
 
