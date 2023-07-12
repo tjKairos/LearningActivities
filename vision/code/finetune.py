@@ -9,9 +9,11 @@ from download_doodles import data_folder, load_labeled
 from pretrain import classes as pretrain_classes
 
 
-def finetuned_model():
-    train_data, val_data, test_data = load_labeled(classes = pretrain_classes, show = False)
+def finetuned_model(do_tune: bool = True):
     model = DoodleClassifier.load_from_checkpoint(f"{data_folder}/pretrained_model.ckpt", map_location = torch.device("cpu"))
+    if not do_tune:
+        return model
+    train_data, val_data, test_data = load_labeled(classes = pretrain_classes, show = False)
     trainer = pl.Trainer(max_epochs = 20,
                         accelerator = "gpu" if torch.cuda.is_available() else "cpu",
                         devices = 1,

@@ -6,19 +6,22 @@ from finetune import finetuned_model
 import torch
 import pytorch_lightning as pl
 import pygame
+import numpy as np
 from utils import render_multiline
 
-classes = labeled_classes(pretrain_classes)
+classes = pretrain_classes
 
 if __name__ == "__main__":
-    # train_data, val_data, test_data = load_data(percent_data = 0.9, classes = classes)
-    model = finetuned_model()
-    # Temporary hack
+    do_tune = False
+    just_labeled = False
+    model = finetuned_model(do_tune = do_tune)
     model.hparams.classes = pretrain_classes
+    if just_labeled:
+        classes = labeled_classes(pretrain_classes)
 
     game = DrawingGame(width = 1000, height = 800, resolution = 28, blur = 0.4)
 
-    font = pygame.font.Font("freesansbold.ttf", 32)
+    font = pygame.font.Font("freesansbold.ttf", 24)
 
     update_every = 10
     step = 0
@@ -39,7 +42,12 @@ if __name__ == "__main__":
             probabilities = [f"{p[0]}: {p[1]:.1%}" for p in predictions]
             probabilities = probabilities[:5]
 
-        text_height = font.get_height() * len(probabilities) + 10
-        text_width = font.size(longest_class_name + ": 00.0%")[0] + 10
-        render_multiline(probabilities, font, (255, 255, 255), (0, 0, 0), 800 - text_width, game.height - text_height, screen = game.screen)
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c or event.key == pygame.K_SPACE:
+                    game.drawing.pixels = np.zeros((game.drawing.width, game.drawing.height, 3), dtype = np.int16)
+
+        text_height = font.get_height() * len(probabilities) + 2
+        text_width = font.size(longest_class_name + ": 00.0%")[0]
+        render_multiline(probabilities, font, (255, 255, 255), (0, 0, 0), game.width - text_width, game.height - text_height, screen = game.screen)
         step += 1

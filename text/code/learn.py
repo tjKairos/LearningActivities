@@ -29,6 +29,29 @@ def gather_sentiments(sentiments: list[str]) -> dict[str, dict[str, int]]:
 
 
 def score_sentiments(sentiment_counts: dict[str, dict[str, int]], prompt_counts: dict[str, int]) -> dict[str, int]:
+    """
+    Score each sentiment based on the counts of the words in the prompt
+    
+    For each sentiment, multiply the count of each word in the prompt by the count of that word in the sentiment.
+
+    Example:
+    Sentiment Counts:
+    {
+        "happy": {
+            "joy": 2,
+            "happy": 1
+        },
+        "sad": {
+            "sad": 1,
+            "grump": 1
+        }
+    }
+    Sentiment: happy
+    Prompt: "joy joy joy happy grump"
+    Prompt Counts: {"joy": 3, "happy": 1, "grump": 1}
+    Score: 3 * 2 + 1 * 1 = 7
+    Final Output: {"happy": 7, "sad": 1}
+    """
     scores = {}
     for sentiment, learned_counts in sentiment_counts.items():
         score = 0
@@ -40,6 +63,13 @@ def score_sentiments(sentiment_counts: dict[str, dict[str, int]], prompt_counts:
 
 
 def classify_sentiment(sentiment_counts: dict[str, dict[str, int]], prompt_counts: dict[str, int]) -> str:
+    """
+    Classify the sentiment of the prompt based on the counts of the words in the prompt
+
+    Use your score_sentiments function to score each sentiment.
+    Then look through each of the scores and pick the sentiment with the highest score.
+    Return that sentiment and its score.
+    """
     max_sentiment = None
     max_score = 0
     all_scores = score_sentiments(sentiment_counts, prompt_counts)
@@ -56,6 +86,8 @@ def main():
     for sentiment in sentiment_counts:
         print(f"Counts for {sentiment}:")
         print_counts(sentiment_counts[sentiment])
+
+    # Save the sentiment counts to a file for future use
     with open(f"{data_folder}/counts.pickle", "wb") as file:
         pickle.dump(sentiment_counts, file)
 

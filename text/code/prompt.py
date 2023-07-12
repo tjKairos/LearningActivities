@@ -7,8 +7,15 @@ def prompt_sentence() -> Optional[str]:
         return None
     return prompt
 
-def split_prompt(prompt: str):
-    """Split the prompt into tokens"""
+def split_prompt(prompt: str) -> list[str]:
+    """
+    Split the prompt into individual words, ignoring punctuation
+    
+    Examples:
+    "hi" -> ["hi"]
+    "hello world" -> ["hello", "world"]
+    "hello, world!" -> ["hello", "world"]
+    """
     # Remove punctuation
     punctuation = ".,!?;:-()[]{}'\"\\/@#$%^&*"
     for char in punctuation:
@@ -17,8 +24,15 @@ def split_prompt(prompt: str):
     return prompt.split()
 
 
-def count_words(words: list[str]):
-    """Count the words in a list and return a dictionary of their counts"""
+def count_words(words: list[str]) -> dict[str, int]:
+    """
+    Count the words in a list and return a dictionary of their counts
+    
+    Examples:
+    ["hi"] -> {"hi": 1}
+    ["hello", "world", "hello"] -> {"hello": 2, "world": 1}
+    ["hello", "world", "hello", "world"] -> {"hello": 2, "world": 2}
+    """
     counts = {}
     for word in words:
         if word in counts:
