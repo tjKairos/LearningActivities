@@ -34,9 +34,11 @@ def count_words(words: list[str]) -> dict[str, int]:
     ["hello", "world", "hello", "world"] -> {"hello": 2, "world": 2}
     """
     counts = {}
-
-    # Your code here
-
+    for word in words:
+        if word in counts:
+            counts[word] += 1
+        else:
+            counts[word] = 1
     return counts
 
 
